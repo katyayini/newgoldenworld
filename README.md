@@ -6,6 +6,8 @@ This is an API for a social network web application where users can share their 
 
 This API uses Express.js, MongoDB database, Mongoose ODM, Moment.
 
+## Screenshot
+![](assets/InsomniaScreenshot.JPG)
 
 ## Link to Walkthrough Video
 
