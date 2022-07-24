@@ -41,46 +41,46 @@ module.exports = {
 
   //Update a user
   updateUser(req, res) {
-    User.findOneAndUpdate({_id: req.params.userId}, req.body, {new: true, runValidators: true})
-    .then(user => {
-        if(!user) {
-            res.status(404).json({message: 'No such user exists!'});
-            return;
+    User.findOneAndUpdate({ _id: req.params.userId }, req.body, { new: true, runValidators: true })
+      .then(user => {
+        if (!user) {
+          res.status(404).json({ message: 'No such user exists!' });
+          return;
         }
         res.json(user);
-    })
-    .catch(err => res.json(err))
-},
+      })
+      .catch(err => res.json(err))
+  },
 
   // Add a friend
   addFriend(req, res) {
-     User.findOneAndUpdate(
+    User.findOneAndUpdate(
       { _id: req.params.userId },
       { $addToSet: { friends: req.params.friendId } },
       { new: true, runValidators: true }
-  )
-  .then(user => {
-      if (!user) {
+    )
+      .then(user => {
+        if (!user) {
           res.status(404).json({ message: 'No user with this userId!' });
           return;
-      }
-      
-      User.findOneAndUpdate(
+        }
+
+        User.findOneAndUpdate(
           { _id: req.params.friendId },
           { $addToSet: { friends: req.params.userId } },
           { new: true, runValidators: true }
-      )
-      .then(users => {
-          if(!users) {
+        )
+          .then(users => {
+            if (!users) {
               res.status(404).json({ message: 'No user with this friendId' })
               return;
-          }
-          res.json(user);
+            }
+            res.json(user);
+          })
+          .catch(err => res.json(err));
       })
       .catch(err => res.json(err));
-  })
-  .catch(err => res.json(err));
-   
+
   },
   // Remove a friend
   removeFriend(req, res) {
@@ -88,27 +88,27 @@ module.exports = {
       { _id: req.params.userId },
       { $pull: { friends: req.params.friendId } },
       { new: true, runValidators: true }
-  )
-  .then(user => {
-      if (!user) {
+    )
+      .then(user => {
+        if (!user) {
           res.status(404).json({ message: 'No user with this userId' });
           return;
-      }
-      
-      User.findOneAndUpdate(
+        }
+
+        User.findOneAndUpdate(
           { _id: req.params.friendId },
           { $pull: { friends: req.params.userId } },
           { new: true, runValidators: true }
-      )
-      .then(users => {
-          if(!users) {
+        )
+          .then(users => {
+            if (!users) {
               res.status(404).json({ message: 'No user with this friendId' })
               return;
-          }
-          res.json({message: 'Successfully removed friend'});
+            }
+            res.json({ message: 'Successfully removed friend' });
+          })
+          .catch(err => res.json(err));
       })
       .catch(err => res.json(err));
-  })
-  .catch(err => res.json(err));
-}
+  }
 };

@@ -8,3 +8,5 @@ This API uses Express.js, MongoDB database, Mongoose ODM, Moment.
 
 
 ## Link to Walkthrough Video
+
+https://drive.google.com/file/d/1GFGWytex0V2B021Yo_AzYHApF5zRZ9N3/view
